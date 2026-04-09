@@ -1,0 +1,11 @@
+.env
+credentials.json
+AGENTS.md
+ngrok.exe
+__pycache__/
+*.pyc
+venv/
+.venv/
+.vscode/
+.editorconfig
+feedback_*.txt
