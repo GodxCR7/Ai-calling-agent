@@ -1,4 +1,4 @@
-# Fydo AI Calling Agent - Setup Guide
+#  AI Calling Agent - Setup Guide
 
 ## FIRST READ THE COMPLETE DOCUMENTATION
 
