@@ -1,111 +1,88 @@
-AI Calling Agent
-An automated voice-based feedback collection system that calls contacts and conducts natural, multilingual conversations using an AI model.
+# 🤖 AI Calling Agent
 
-This workflow helps businesses automate customer/client feedback collection by calling contacts, gathering their responses, and logging structured feedback automatically — reducing manual follow-up effort.
+An automated **AI-powered voice calling system** that places outbound calls, conducts natural multilingual conversations, collects customer feedback, and automatically stores structured results.
 
-Overview
-The system reads pending contacts from a Google Sheet, places outbound calls to them, conducts a natural feedback conversation using an AI model, and logs the results automatically.
+The system is designed to help businesses automate customer/client feedback collection by replacing repetitive manual follow-up calls with an intelligent conversational AI workflow.
 
-Outcomes include:
+---
 
-Feedback is collected and summarized after each call
-Contact status is automatically updated as calls progress
-Results are logged to Google Sheets for review
-The system triggers calls via Vapi, drives the conversation using an LLM, and handles real-time call events through webhooks.
+## 📌 Overview
 
-Workflow Logic
-The automation follows this logic:
+The AI Calling Agent automates the complete feedback collection process:
 
-Contact Polling
+1. Reads pending contacts from **Google Sheets**
+2. Automatically triggers outbound calls using **Vapi**
+3. Conducts a natural conversation using an **LLM**
+4. Supports **Hindi, English, and Hinglish**
+5. Processes real-time call events through **FastAPI webhooks**
+6. Summarizes the conversation using AI
+7. Updates the contact's calling status
+8. Stores the generated feedback summary back into **Google Sheets**
 
-Checks Google Sheets every 60 seconds for new contacts with no status
-Call Trigger
+This creates an end-to-end automated pipeline for conversational customer feedback collection.
 
-Waits ~2 minutes, then places an outbound call via Vapi
-Webhook Event Handling
+---
 
-FastAPI server listens for real-time call events (start, live transcript, end)
-AI Conversation
+## 🏗️ Workflow Architecture
 
-LLM drives a natural, multilingual (Hindi/English/Hinglish) feedback conversation
-Built-in profanity/safety filter applied to responses
-Feedback Summary
-
-Conversation transcript is summarized once the call ends
-Update & Store
-
-Contact status updated to "Called"
-Feedback summary appended to the Google Sheet
-Features
-Multilingual voice conversations (Hindi, English, Hinglish)
-Automated outbound calling pipeline
-Real-time webhook-driven call handling
-AI-generated feedback summaries
-Automated status tracking and data logging in Google Sheets
-Local + cloud LLM support (Ollama for offline, Groq for fast cloud inference)
-Twilio backup telephony support
-Built-in safety/profanity filter
-Tech Stack
-Vapi – Primary voice/telephony platform
-Twilio – Backup telephony integration
-Groq – Cloud LLM inference
-Ollama (phi3) – Local LLM inference
-FastAPI – Backend server for webhook handling
-Google Sheets – Contact and feedback data storage
-Python – Core language
-Workflow Structure
-Main components used in the system:
-
-server.py – FastAPI server, handles Vapi webhooks and call lifecycle events
-ai_brain.py – Conversational logic, system prompt, LLM interaction, safety filter
-config.py – Loads API keys/configuration from environment variables
-make_calls.py – Polls Google Sheets and auto-triggers calls
-google_sheets.py – Reads contacts, updates status, saves feedback
-Test_twlio_phone.py – Standalone Twilio connectivity test
-test_ollama.py – Standalone local Ollama inference test
-Use Case
-This automation can be used by:
-
-Businesses conducting post-service feedback calls
-Sales/support teams following up with customers
-Event or service-based companies collecting client feedback
-Any workflow needing automated, conversational outbound calling
-It helps reduce manual calling effort and automates structured feedback collection.
-
-How to Use
-Clone the repository
-
-git clone https://github.com/GodxCR7/Ai-calling-agent.git
-cd Ai-calling-agent
-Install dependencies
-
-pip install -r requirements.txt
-Configure environment variables
-
-cp .env.example .env
-Fill in your Vapi, Twilio, Groq, and Deepgram keys
-
-Add your Google Cloud service account credentials.json to the project root
-
-Set up your Google Sheet with a Contacts sheet (Name, Phone Number, Status) and a Feedback sheet
-
-Run the project
-
-# Windows
-start_all.bat
-
-# Or manually
-python server.py
-python make_calls.py
-See SETUP.md for full step-by-step instructions.
-
-Future Improvements
-Add retry logic for failed/missed calls
-Support additional languages beyond Hindi/English/Hinglish
-Build a dashboard for call analytics and feedback trends
-Add authentication to webhook endpoints
-Store call recordings alongside transcripts
-Author
-Pratik Nayak MCA Graduate | AI/ML Automation Enthusiast
-
-Focused on building conversational AI and automation systems that reduce manual work and improve operational efficiency.
+```text
+┌─────────────────────┐
+│    Google Sheets    │
+│                     │
+│ Name                │
+│ Phone Number        │
+│ Status              │
+└──────────┬──────────┘
+           │
+           │ Poll every 60 seconds
+           ▼
+┌─────────────────────┐
+│    make_calls.py    │
+│                     │
+│ Find pending calls  │
+└──────────┬──────────┘
+           │
+           │ Trigger outbound call
+           ▼
+┌─────────────────────┐
+│        Vapi         │
+│                     │
+│ Voice Call Engine   │
+└──────────┬──────────┘
+           │
+           │ Real-time events
+           ▼
+┌─────────────────────┐
+│      FastAPI        │
+│      server.py      │
+│                     │
+│ Webhook Handler     │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│     AI Brain        │
+│    ai_brain.py      │
+│                     │
+│ LLM Conversation    │
+│ Safety Filter       │
+│ Feedback Processing │
+└──────────┬──────────┘
+           │
+           │ Call completed
+           ▼
+┌─────────────────────┐
+│   Feedback Summary  │
+│                     │
+│ AI-generated        │
+│ conversation        │
+│ summary             │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│    Google Sheets    │
+│                     │
+│ Status → Called     │
+│ Feedback → Saved    │
+└─────────────────────┘
