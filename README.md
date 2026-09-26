@@ -86,3 +86,110 @@ This creates an end-to-end automated pipeline for conversational customer feedba
 │ Status → Called     │
 │ Feedback → Saved    │
 └─────────────────────┘
+```
+
+---
+
+## ✨ Features
+
+- Multilingual voice conversations (Hindi, English, Hinglish)
+- Automated outbound calling pipeline
+- Real-time webhook-driven call handling
+- AI-generated feedback summaries
+- Automated status tracking and data logging in Google Sheets
+- Local + cloud LLM support (Ollama for offline, Groq for fast cloud inference)
+- Twilio backup telephony support
+- Built-in safety/profanity filter
+
+---
+
+## 🛠️ Tech Stack
+
+- **Vapi** – Primary voice/telephony platform
+- **Twilio** – Backup telephony integration
+- **Groq** – Cloud LLM inference
+- **Ollama (phi3)** – Local LLM inference
+- **FastAPI** – Backend server for webhook handling
+- **Google Sheets** – Contact and feedback data storage
+- **Python** – Core language
+
+---
+
+## 📂 Workflow Structure
+
+Main components used in the system:
+
+- `server.py` – FastAPI server, handles Vapi webhooks and call lifecycle events
+- `ai_brain.py` – Conversational logic, system prompt, LLM interaction, safety filter
+- `config.py` – Loads API keys/configuration from environment variables
+- `make_calls.py` – Polls Google Sheets and auto-triggers calls
+- `google_sheets.py` – Reads contacts, updates status, saves feedback
+- `Test_twlio_phone.py` – Standalone Twilio connectivity test
+- `test_ollama.py` – Standalone local Ollama inference test
+
+---
+
+## 🎯 Use Case
+
+This automation can be used by:
+
+- Businesses conducting post-service feedback calls
+- Sales/support teams following up with customers
+- Event or service-based companies collecting client feedback
+- Any workflow needing automated, conversational outbound calling
+
+It helps reduce manual calling effort and automates structured feedback collection.
+
+---
+
+## 🚀 How to Use
+
+1. Clone the repository
+```bash
+   git clone https://github.com/GodxCR7/Ai-calling-agent.git
+   cd Ai-calling-agent
+```
+
+2. Install dependencies
+```bash
+   pip install -r requirements.txt
+```
+
+3. Configure environment variables
+```bash
+   cp .env.example .env
+```
+   Fill in your Vapi, Twilio, Groq, and Deepgram keys
+
+4. Add your Google Cloud service account `credentials.json` to the project root
+
+5. Set up your Google Sheet with a Contacts sheet (Name, Phone Number, Status) and a Feedback sheet
+
+6. Run the project
+```bash
+   # Windows
+   start_all.bat
+
+   # Or manually
+   python server.py
+   python make_calls.py
+```
+
+---
+
+## 🔮 Future Improvements
+
+- Add retry logic for failed/missed calls
+- Support additional languages beyond Hindi/English/Hinglish
+- Build a dashboard for call analytics and feedback trends
+- Add authentication to webhook endpoints
+- Store call recordings alongside transcripts
+
+---
+
+## 👤 Author
+
+**Pratik Nayak**
+MCA Graduate | AI/ML Automation Enthusiast
+
+Focused on building conversational AI and automation systems that reduce manual work and improve operational efficiency.
